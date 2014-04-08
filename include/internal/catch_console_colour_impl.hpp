@@ -134,8 +134,12 @@ namespace Catch {
             void use( Colour::Code ) {}
         };
         NoColourImpl noColourImpl;
-        static const bool shouldUseColour = shouldUseColourForPlatform() &&
-                                            !isDebuggerActive();
+		#ifdef CATCH_DISABLE_COLOUR
+			static const bool shouldUseColour = false;
+		#else
+			static const bool shouldUseColour = shouldUseColourForPlatform() &&
+												!isDebuggerActive();
+		#endif
     }
 
     Colour::Colour( Code _colourCode ){ use( _colourCode ); }
